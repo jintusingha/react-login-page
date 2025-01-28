@@ -14,6 +14,24 @@ const Login = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState('');
+
+  const evaluatePasswordStrength = (password) => {
+    if (password.length < 8) {
+      setPasswordStrength('Weak');
+    } else if (password.match(/[A-Z]/) && password.match(/[0-9]/)) {
+      setPasswordStrength('Medium');
+    } else if (
+      password.match(/[A-Z]/) &&
+      password.match(/[a-z]/) &&
+      password.match(/[0-9]/) &&
+      password.match(/[!@#$%^&*]/)
+    ) {
+      setPasswordStrength('Strong');
+    } else {
+      setPasswordStrength('Medium');
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -107,11 +125,17 @@ const Login = () => {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  evaluatePasswordStrength(e.target.value);
+                }}
                 className="form-input"
                 placeholder="Enter your password"
               />
               {passwordError && <span className="error-text">{passwordError}</span>}
+              <div className={`password-strength ${passwordStrength.toLowerCase()}`}>
+                Strength: {passwordStrength}
+              </div>
             </div>
 
             {/* Confirm Password */}
@@ -136,28 +160,13 @@ const Login = () => {
           <div className="alternative-login">
             <p>or sign up with</p>
             <div className="social-buttons">
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-social facebook"
-              >
+              <a href="https://www.facebook.com" className="btn-social facebook">
                 <FaFacebook size={20} /> Facebook
               </a>
-              <a
-                href="https://www.google.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-social google"
-              >
+              <a href="https://www.google.com" className="btn-social google">
                 <FcGoogle size={20} /> Google
               </a>
-              <a
-                href="https://www.apple.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-social apple"
-              >
+              <a href="https://www.apple.com" className="btn-social apple">
                 <BsApple size={20} /> Apple
               </a>
             </div>

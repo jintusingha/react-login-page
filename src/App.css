@@ -149,3 +149,22 @@ body {
   margin-top: 5px;
   display: block;
 }
+
+.password-strength {
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Color codes for password strength */
+.password-strength.weak {
+  color: red;
+}
+
+.password-strength.medium {
+  color: orange;
+}
+
+.password-strength.strong {
+  color: green;
+}
